@@ -34,7 +34,7 @@ jobs:
           username: web@gonulkoprusu.com
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          remote-dir: /
+          server-dir: /
           exclude: |
             **/.git/**
             **/.gitignore
