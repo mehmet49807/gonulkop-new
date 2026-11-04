@@ -29,8 +29,4 @@
 
       - name: Web Sitesi Cache Temizleme Tetikle
         run: |
-          curl -s "https://gonulkoprusu.com/deploy-cache-clear-start" > /dev/null
-          while ! curl -s "https://gonulkoprusu.com/deploy-cache-clear-start" | grep -q "Önbellek başarıyla temizlendi!"; do
-            echo "Önbellek temizleme tamamlanmadı, 5 saniye bekleniyor..."
-            sleep 5
-          done
+          curl -s "https://gonulkoprusu.com/deploy-cache-clear-start"
