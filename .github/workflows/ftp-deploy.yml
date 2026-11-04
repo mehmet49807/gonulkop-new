@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Kodı indir
+      - name: Kodu indir
         uses: actions/checkout@v4
 
       - name: PHP kur
@@ -18,7 +18,12 @@ jobs:
         with:
           php-version: '8.3'
 
-      - name: Composer bağımlılıkları
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Composer bağımlılıkları (Production)
         run: |
           composer install --no-dev --optimize-autoloader --no-interaction
 
@@ -34,22 +39,21 @@ jobs:
           username: web@gonulkoprusu.com
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
+          # Sunucunuzdaki ana public dizini genellikle public_html veya httpdocs olur.
+          # Hosting yapınıza göre burayı güncelleyin (Örn: /public_html/ veya /)
           server-dir: /
           exclude: |
             **/.git/**
-            **/.gitignore
-            **/node_modules/**
-            **/vendor/**
-            **/storage/logs/**
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/bootstrap/cache/**
             **/.env
             **/.env.example
             **/.env.production
+            **/node_modules/**
+            **/storage/*.sqlite
+            **/storage/logs/*
+            **/storage/framework/cache/data/*
+            **/storage/framework/sessions/*
+            **/storage/framework/views/*
             **/deploy_ftp.*
             **/deploy.sh
             **/gonulkop-deploy.zip
-            **/public_html/
             **/.github/**
