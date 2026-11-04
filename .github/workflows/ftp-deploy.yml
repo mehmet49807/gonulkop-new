@@ -41,8 +41,10 @@ jobs:
           local-dir: ./
           server-dir: /public_html/
           protocol: ftp
-          # Sadece değişen dosyaları göndererek yükleme süresini kısaltır
+          
+          # BU PARAMETRE ÖNEMLİ: Sadece değişen dosyaları senkronize eder
           state-name: ftp-deploy-state.json
+          
           exclude: |
             **/.git/**
             **/.env
