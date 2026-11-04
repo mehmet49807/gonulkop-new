@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Kodı indir
         uses: actions/checkout@v4
@@ -18,7 +20,7 @@ jobs:
 
       - name: Composer bağımlılıkları
         run: |
-          composer install --no-dev --optimize-autoloader
+          composer install --no-dev --optimize-autoloader --no-interaction
 
       - name: Frontend build
         run: |
@@ -39,6 +41,9 @@ jobs:
             **/node_modules/**
             **/vendor/**
             **/storage/logs/**
+            **/storage/framework/cache/**
+            **/storage/framework/sessions/**
+            **/storage/framework/views/**
             **/bootstrap/cache/**
             **/.env
             **/.env.example
@@ -47,3 +52,4 @@ jobs:
             **/deploy.sh
             **/gonulkop-deploy.zip
             **/public_html/
+            **/.github/**
