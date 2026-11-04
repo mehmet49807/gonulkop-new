@@ -46,3 +46,4 @@ jobs:
             **/deploy_ftp.*
             **/deploy.sh
             **/gonulkop-deploy.zip
+            **/public_html/
