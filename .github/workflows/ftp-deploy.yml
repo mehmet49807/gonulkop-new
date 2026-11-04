@@ -26,7 +26,3 @@
             **/tests/**
             **/phpunit.xml
             **/README.md
-
-      - name: Web Sitesi Cache Temizleme Tetikle
-        run: |
-          curl -s "https://gonulkoprusu.com/deploy-cache-clear-start"
