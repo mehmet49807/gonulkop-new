@@ -41,7 +41,8 @@ jobs:
           local-dir: ./
           server-dir: /public_html/
           protocol: ftp
-          # Sadece değişen dosyaları göndererek yükleme süresini kısaltır
+          # Hatalı olan 'options' kaldırıldı. 
+          # Sadece değişen dosyaları gönderip süreyi kısaltmak için state-name kullanıyoruz:
           state-name: ftp-deploy-state.json
           exclude: |
             **/.git/**
