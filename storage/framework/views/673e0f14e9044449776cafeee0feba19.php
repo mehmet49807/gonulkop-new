@@ -1,0 +1,2 @@
+<?php echo $__env->make('profile.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php /**PATH /home/gonulkop/public_html/resources/views/profiles/show.blade.php ENDPATH**/ ?>

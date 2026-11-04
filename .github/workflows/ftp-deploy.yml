@@ -1,0 +1,48 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodı indir
+        uses: actions/checkout@v4
+
+      - name: PHP kur
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Composer bağımlılıkları
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      - name: Frontend build
+        run: |
+          npm ci
+          npm run build
+
+      - name: FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        with:
+          server: ftp.gonulkoprusu.com
+          username: web@gonulkoprusu.com
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          remote-dir: /public_html/
+          exclude: |
+            **/.git/**
+            **/.gitignore
+            **/node_modules/**
+            **/vendor/**
+            **/storage/logs/**
+            **/bootstrap/cache/**
+            **/.env
+            **/.env.example
+            **/.env.production
+            **/deploy_ftp.*
+            **/deploy.sh
+            **/gonulkop-deploy.zip
