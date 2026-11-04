@@ -1,6 +1,6 @@
 name: FTP Deploy (Gönül Köprüsü)
 
-# Windows klasör → git push → bu workflow → FTP → sunucu
+# Windows → git push → Actions → FTP (web@ → hesap kökü = public_html)
 on:
   push:
     branches: [main, master]
@@ -41,11 +41,10 @@ jobs:
           npm ci || npm install
           npm run build
 
-      - name: Laravel optimize (config cache yok — .env sunucuda kalır)
-        run: |
-          php artisan package:discover --ansi || true
+      - name: Laravel package discover
+        run: php artisan package:discover --ansi || true
 
-      - name: FTP ile public_html'e yükle
+      - name: FTP ile yükle
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -53,7 +52,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR || '/public_html/' }}
+          # web@ hesabı kök dizini zaten public_html içeriği
+          server-dir: /
           dangerous-clean-slate: false
           exclude: |
             **/.git*
