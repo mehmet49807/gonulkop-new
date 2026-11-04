@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Kodu indir
+      - name: Kodı indir
         uses: actions/checkout@v4
 
       - name: PHP kur
@@ -21,7 +21,7 @@ jobs:
       - name: Node.js kur
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Composer bağımlılıkları (Production)
         run: |
@@ -33,7 +33,7 @@ jobs:
           npm run build
 
       - name: FTP ile yükle
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftp.gonulkoprusu.com
           username: gonulweb@gonulkoprusu.com
@@ -41,9 +41,6 @@ jobs:
           local-dir: ./
           server-dir: /public_html/
           protocol: ftp
-          # Hatalı olan 'options' kaldırıldı. 
-          # Sadece değişen dosyaları gönderip süreyi kısaltmak için state-name kullanıyoruz:
-          state-name: ftp-deploy-state.json
           exclude: |
             **/.git/**
             **/.env
