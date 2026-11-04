@@ -36,9 +36,10 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftp.gonulkoprusu.com
-          username: web@gonulkoprusu.com
+          username: gonulweb@gonulkoprusu.com
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
+          server-dir: /public_html/
           # Sunucunuzdaki ana public dizini genellikle public_html veya httpdocs olur.
           # Hosting yapınıza göre burayı güncelleyin (Örn: /public_html/ veya /)
           server-dir: /
