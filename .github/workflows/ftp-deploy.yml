@@ -41,13 +41,8 @@ jobs:
           local-dir: ./
           server-dir: /public_html/
           protocol: ftp
-          
-          # HIZLANDIRMA PARAMETRELERI:
-          # Sadece değişen dosyaları gönderir (state-name ile durumu hatırlar)
+          # Sadece değişen dosyaları göndererek yükleme süresini kısaltır
           state-name: ftp-deploy-state.json
-          # Aynı boyutta/tarihte olan dosyaları tekrar yüklemez
-          options: "--delete --parallel=3"
-          
           exclude: |
             **/.git/**
             **/.env
@@ -66,8 +61,3 @@ jobs:
             **/tests/**
             **/phpunit.xml
             **/README.md
-            **/composer.json
-            **/composer.lock
-            **/package.json
-            **/package-lock.json
-            **/vite.config.js
