@@ -38,12 +38,16 @@ jobs:
           server: ftp.gonulkoprusu.com
           username: gonulweb@gonulkoprusu.com
           password: ${{ secrets.FTP_PASSWORD }}
-          # Yerel (GitHub) dizin kökünü baz alıyoruz
           local-dir: ./
-          # FTP açıldığında root görünüyor ve hedefimiz public_html ise:
           server-dir: /public_html/
           protocol: ftp
-          dangerous-clean-slate: false
+          
+          # HIZLANDIRMA PARAMETRELERI:
+          # Sadece değişen dosyaları gönderir (state-name ile durumu hatırlar)
+          state-name: ftp-deploy-state.json
+          # Aynı boyutta/tarihte olan dosyaları tekrar yüklemez
+          options: "--delete --parallel=3"
+          
           exclude: |
             **/.git/**
             **/.env
@@ -59,3 +63,11 @@ jobs:
             **/deploy.sh
             **/gonulkop-deploy.zip
             **/.github/**
+            **/tests/**
+            **/phpunit.xml
+            **/README.md
+            **/composer.json
+            **/composer.lock
+            **/package.json
+            **/package-lock.json
+            **/vite.config.js
