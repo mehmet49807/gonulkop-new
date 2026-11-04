@@ -1,4 +1,38 @@
-- name: FTP ile yükle
+name: FTP Deploy
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Kodu indir
+        uses: actions/checkout@v4
+
+      - name: PHP kur
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Composer bağımlılıkları (Production)
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Frontend build
+        run: |
+          npm install
+          npm run build
+
+      - name: FTP ile yükle
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.gonulkoprusu.com
@@ -7,6 +41,7 @@
           local-dir: ./
           server-dir: /public_html/
           protocol: ftp
+          # Sadece değişen dosyaları göndererek yükleme süresini kısaltır
           state-name: ftp-deploy-state.json
           exclude: |
             **/.git/**
@@ -26,7 +61,3 @@
             **/tests/**
             **/phpunit.xml
             **/README.md
-
-      - name: Web Sitesi Cache Temizleme Tetikle
-        run: |
-          curl -s "https://gonulkoprusu.com/deploy-cache-clear-start"
