@@ -33,15 +33,17 @@ jobs:
           npm run build
 
       - name: FTP ile yükle
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.gonulkoprusu.com
           username: gonulweb@gonulkoprusu.com
           password: ${{ secrets.FTP_PASSWORD }}
+          # Yerel (GitHub) dizin kökünü baz alıyoruz
           local-dir: ./
-          # Sunucunuzdaki ana public dizini genellikle public_html veya httpdocs olur.
-          # Hosting yapınıza göre burayı güncelleyin (Örn: /public_html/ veya /)
-          server-dir: /
+          # FTP açıldığında root görünüyor ve hedefimiz public_html ise:
+          server-dir: /public_html/
+          protocol: ftp
+          dangerous-clean-slate: false
           exclude: |
             **/.git/**
             **/.env
